@@ -23,7 +23,7 @@
         <van-list
           v-model:loading="state.loading"
           :finished="state.finished"
-          :finished-text="state.productList.length ? '没有更多了' : '搜索想要的商品'"
+          :finished-text="state.productList.length ? '没有更多了' : '搜索想要的图书'"
           @load="onLoad"
           @offset="10"
         >

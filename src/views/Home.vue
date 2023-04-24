@@ -3,9 +3,9 @@
     <header class="home-header wrap" :class="{'active' : state.headerScroll}">
       <router-link tag="i" to="./category"><i class="nbicon nbmenu2"></i></router-link>
       <div class="header-search">
-        <span class="app-name">书店商城</span>
+        <span class="app-name">先锋书店</span>
         <i class="iconfont icon-search"></i>
-        <router-link tag="span" class="search-title" to="./product-list?from=home">山河无恙，人间皆安</router-link>
+        <router-link tag="span" class="search-title" to="./product-list?from=home"> </router-link>
       </div>
       <router-link class="login" tag="span" to="./login" v-if="!state.isLogin">登录</router-link>
       <router-link class="login" tag="span" to="./user" v-else>
