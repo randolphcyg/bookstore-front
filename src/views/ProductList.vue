@@ -191,8 +191,8 @@ const changeTab = ({ name }) => {
       padding: 10px 0;
       border-bottom: 1px solid #dcdcdc;
       img {
-        width: 140px;
-        height: 120px;
+        width: 120px;
+        height: 100px;
         padding: 0 10px;
         .boxSizing();
       }
@@ -210,18 +210,18 @@ const changeTab = ({ name }) => {
             max-height: 40px;
             line-height: 20px;
             font-size: 15px;
-            color: #333;
+            color: #eceaea;
             overflow: hidden;
             text-overflow:ellipsis;
             white-space: nowrap;
           }
           .subtitle {
             width: 100%;
-            max-height: 20px;
+            max-height: 30px;
             padding: 10px 0;
             line-height: 25px;
             font-size: 13px;
-            color: #999;
+            color: #f7afaf;
             overflow: hidden;
           }
           .price {
