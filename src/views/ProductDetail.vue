@@ -81,7 +81,7 @@ const goTo = () => {
 
 const handleAddCart = async () => {
   const { resultCode } = await addCart({ goodsCount: 1, goodsId: state.detail.goodsId })
-  if (resultCode == 200 ) showSuccessToast('添加成功')
+  if (resultCode === 200 ) showSuccessToast('添加成功')
   cart.updateCart()
 }
 

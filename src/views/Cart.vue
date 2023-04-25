@@ -119,7 +119,7 @@ const onChange = async (value, detail) => {
    * 这边做一个拦截处理，如果点击的时候，购物车单项的 goodsCount 等于点击的计步器数字，
    * 那么就不再进行修改操作
   */
-  if (state.list.find(item => item.cartItemId == detail.name)?.goodsCount == value) return
+  if (state.list.find(item => item.cartItemId === detail.name)?.goodsCount === value) return
   showLoadingToast({ message: '修改中...', forbidClick: true });
   const params = {
     cartItemId: detail.name,
@@ -131,7 +131,7 @@ const onChange = async (value, detail) => {
    * 这边手动给操作的购物车商品修改数据
   */
   state.list.forEach(item => {
-    if (item.cartItemId == detail.name) {
+    if (item.cartItemId === detail.name) {
       item.goodsCount = value
     }
   })
@@ -139,7 +139,7 @@ const onChange = async (value, detail) => {
 }
 
 const onSubmit = async () => {
-  if (state.result.length == 0) {
+  if (state.result.length === 0) {
     showFailToast('请选择商品进行结算')
     return
   }
@@ -154,7 +154,7 @@ const deleteGood = async (id) => {
 }
 
 const groupChange = (result) => {
-  if (result.length == state.list.length) {
+  if (result.length === state.list.length) {
     state.checkAll = true
   } else {
     state.checkAll = false

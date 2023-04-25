@@ -1,11 +1,11 @@
 <template>
   <div class="address-edit-box">
-    <s-header :name="`${state.type == 'add' ? '新增地址' : '编辑地址'}`"></s-header>
+    <s-header :name="`${state.type === 'add' ? '新增地址' : '编辑地址'}`"></s-header>
     <van-address-edit
       class="edit"
       :area-list="state.areaList"
       :address-info="state.addressInfo"
-      :show-delete="state.type == 'edit'"
+      :show-delete="state.type === 'edit'"
       show-set-default
       show-search-result
       :search-result="state.searchResult"
@@ -58,20 +58,20 @@ onMounted(async () => {
   state.addressId = addressId
   state.type = type
   state.from = from || ''
-  if (type == 'edit') {
+  if (type === 'edit') {
     const { data: addressDetail } = await getAddressDetail(addressId)
     let _areaCode = ''
     const province = tdist.getLev1()
     Object.entries(state.areaList.county_list).forEach(([id, text]) => {
       // 先找出当前对应的区
-      if (text == addressDetail.regionName) {
+      if (text === addressDetail.regionName) {
         // 找到区对应的几个省份
-        const provinceIndex = province.findIndex(item => item.id.substr(0, 2) == id.substr(0, 2))
+        const provinceIndex = province.findIndex(item => item.id.substr(0, 2) === id.substr(0, 2))
         // 找到区对应的几个市区
         // eslint-disable-next-line no-unused-vars
-        const cityItem = Object.entries(state.areaList.city_list).filter(([cityId, cityName]) => cityId.substr(0, 4) == id.substr(0, 4))[0]
+        const cityItem = Object.entries(state.areaList.city_list).filter(([cityId, cityName]) => cityId.substr(0, 4) === id.substr(0, 4))[0]
         // 对比找到的省份和接口返回的省份是否相等，因为有一些区会重名
-        if (province[provinceIndex].text == addressDetail.provinceName && cityItem[1] == addressDetail.cityName) {
+        if (province[provinceIndex].text === addressDetail.provinceName && cityItem[1] === addressDetail.cityName) {
           _areaCode = id
         }
       }
@@ -100,10 +100,10 @@ const onSave = async (content) => {
     detailAddress: content.addressDetail,
     defaultFlag: content.isDefault ? 1 : 0,
   }
-  if (state.type == 'edit') {
+  if (state.type === 'edit') {
     params['addressId'] = state.addressId
   }
-  await state.type == 'add' ? addAddress(params) : EditAddress(params)
+  await state.type === 'add' ? addAddress(params) : EditAddress(params)
   showToast('保存成功')
   setTimeout(() => {
     router.back()

@@ -101,11 +101,11 @@ const toggle = (v) => {
 // 提交登录或注册表单
 const onSubmit = async (values) => {
   state.imgCode = verifyRef.value.state.imgCode || ''
-  if (state.verify.toLowerCase() != state.imgCode.toLowerCase()) {
+  if (state.verify.toLowerCase() !== state.imgCode.toLowerCase()) {
     showFailToast('验证码有误')
     return
   }
-  if (state.type == 'login') {
+  if (state.type === 'login') {
     const { data } = await login({
       "loginName": values.username,
       "passwordMd5": md5(values.password)

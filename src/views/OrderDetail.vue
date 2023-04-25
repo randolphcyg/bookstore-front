@@ -83,7 +83,7 @@ const handleCancelOrder = (id) => {
     title: '确认取消订单？',
   }).then(() => {
     cancelOrder(id).then(res => {
-      if (res.resultCode == 200) {
+      if (res.resultCode === 200) {
         showSuccessToast('删除成功')
         init()
       }
@@ -98,7 +98,7 @@ const handleConfirmOrder = (id) => {
     title: '是否确认订单？',
   }).then(() => {
     confirmOrder(id).then(res => {
-      if (res.resultCode == 200) {
+      if (res.resultCode === 200) {
         showSuccessToast('确认成功')
         init()
       }
