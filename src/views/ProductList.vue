@@ -30,10 +30,10 @@
           <!-- <p v-for="item in list" :key="item">{{ item }}</p> -->
           <template v-if="state.productList.length">
             <div class="product-item" v-for="(item, index) in state.productList" :key="index" @click="productDetail(item)">
-              <img :src="$filters.prefix(item.goodsCoverImg)" />
+              <img :src="$filters.prefix(item.booksCoverImg)" />
               <div class="product-info">
-                <p class="name">{{item.goodsName}}</p>
-                <p class="subtitle">{{item.goodsIntro}}</p>
+                <p class="name">{{item.booksName}}</p>
+                <p class="subtitle">{{item.booksIntro}}</p>
                 <span class="price">￥ {{item.sellingPrice}}</span>
               </div>
             </div>
@@ -48,7 +48,7 @@
 <script setup>
 import { reactive } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { search } from '@/service/good'
+import { search } from '@/service/book'
 const route = useRoute()
 const router = useRouter()
 const state = reactive({
@@ -71,7 +71,7 @@ const init = async () => {
     state.loading = false;
     return
   }
-  const { data, data: { list } } = await search({ pageNumber: state.page, goodsCategoryId: categoryId, keyword: state.keyword, orderBy: state.orderBy })
+  const { data, data: { list } } = await search({ pageNumber: state.page, booksCategoryId: categoryId, keyword: state.keyword, orderBy: state.orderBy })
   
   state.productList = state.productList.concat(list)
   state.totalPage = data.totalPage
@@ -84,7 +84,7 @@ const goBack = () => {
 }
 
 const productDetail = (item) => {
-  router.push({ path: `/product/${item.goodsId}` })
+  router.push({ path: `/product/${item.booksId}` })
 }
 
 const getSearch = () => {

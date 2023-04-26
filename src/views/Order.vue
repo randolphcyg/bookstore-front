@@ -26,11 +26,11 @@
             <van-card
               v-for="one in item.bookstoreOrderItemVOS"
               :key="one.orderId"
-              :num="one.goodsCount"
+              :num="one.booksCount"
               :price="one.sellingPrice"
               desc="全场包邮"
-              :title="one.goodsName"
-              :thumb="$filters.prefix(one.goodsCoverImg)"
+              :title="one.booksName"
+              :thumb="$filters.prefix(one.booksCoverImg)"
             />
           </div>
         </van-list>

@@ -4,21 +4,21 @@
     <div class="cart-body">
       <van-checkbox-group @change="groupChange" v-model="state.result" ref="checkboxGroup">
         <van-swipe-cell :right-width="50" v-for="(item, index) in state.list" :key="index">
-          <div class="good-item">
+          <div class="book-item">
             <van-checkbox :name="item.cartItemId" />
-            <div class="good-img"><img :src="$filters.prefix(item.goodsCoverImg)" alt=""></div>
-            <div class="good-desc">
-              <div class="good-title">
-                <span>{{ item.goodsName }}</span>
-                <span>x{{ item.goodsCount }}</span>
+            <div class="book-img"><img :src="$filters.prefix(item.booksCoverImg)" alt=""></div>
+            <div class="book-desc">
+              <div class="book-title">
+                <span>{{ item.booksName }}</span>
+                <span>x{{ item.booksCount }}</span>
               </div>
-              <div class="good-btn">
+              <div class="book-btn">
                 <div class="price">¥{{ item.sellingPrice }}</div>
                 <van-stepper
                   integer
                   :min="1"
                   :max="5"
-                  :model-value="item.goodsCount"
+                  :model-value="item.booksCount"
                   :name="item.cartItemId"
                   async-change
                   @change="onChange"
@@ -32,7 +32,7 @@
               icon="delete"
               type="danger"
               class="delete-button"
-              @click="deleteGood(item.cartItemId)"
+              @click="deleteBook(item.cartItemId)"
             />
           </template>
         </van-swipe-cell>
@@ -92,7 +92,7 @@ const total = computed(() => {
   let sum = 0
   let _list = state.list.filter(item => state.result.includes(item.cartItemId))
   _list.forEach(item => {
-    sum += item.goodsCount * item.sellingPrice
+    sum += item.booksCount * item.sellingPrice
   })
   return sum
 })
@@ -107,32 +107,32 @@ const goTo = () => {
 
 const onChange = async (value, detail) => {
   if (value > 5) {
-    showFailToast('超出单个商品的最大购买数量')
+    showFailToast('超出单个图书的最大购买数量')
     return
   }
   if (value < 1) {
-    showFailToast('商品不得小于0')
+    showFailToast('图书不得小于0')
     return
   }
   /**
    * 这里的操作是因为，后面修改购物车后，手动添加的计步器的数据，为了防止数据不对
-   * 这边做一个拦截处理，如果点击的时候，购物车单项的 goodsCount 等于点击的计步器数字，
+   * 这边做一个拦截处理，如果点击的时候，购物车单项的 booksCount 等于点击的计步器数字，
    * 那么就不再进行修改操作
   */
-  if (state.list.find(item => item.cartItemId === detail.name)?.goodsCount === value) return
+  if (state.list.find(item => item.cartItemId === detail.name)?.booksCount === value) return
   showLoadingToast({ message: '修改中...', forbidClick: true });
   const params = {
     cartItemId: detail.name,
-    goodsCount: value
+    booksCount: value
   }
   await modifyCart(params)
   /**
    * 修改完成后，没有请求购物车列表，是因为闪烁的问题，
-   * 这边手动给操作的购物车商品修改数据
+   * 这边手动给操作的购物车图书修改数据
   */
   state.list.forEach(item => {
     if (item.cartItemId === detail.name) {
-      item.goodsCount = value
+      item.booksCount = value
     }
   })
   closeToast()
@@ -140,14 +140,14 @@ const onChange = async (value, detail) => {
 
 const onSubmit = async () => {
   if (state.result.length === 0) {
-    showFailToast('请选择商品进行结算')
+    showFailToast('请选择图书进行结算')
     return
   }
   const params = JSON.stringify(state.result)
   router.push({ path: '/create-order', query: { cartItemIds: params } })
 }
 
-const deleteGood = async (id) => {
+const deleteBook = async (id) => {
   await deleteCartItem(id)
   cart.updateCart()
   init()
@@ -194,24 +194,26 @@ const allCheck = () => {
     .cart-body {
       margin: 16px 0 100px 0;
       padding-left: 10px;
-      .good-item {
+      .book-item {
         display: flex;
-        .good-img {
+        .book-img {
           img {
-            .wh(100px, 100px)
+            .wh(60px, 80px)
           }
         }
-        .good-desc {
+        .book-desc {
           display: flex;
           flex-direction: column;
           justify-content: space-between;
           flex: 1;
           padding: 20px;
-          .good-title {
+          .book-title {
+            color: #d2cdcd;
+            font-size: 14px;
             display: flex;
             justify-content: space-between;
           }
-          .good-btn {
+          .book-btn {
             display: flex;
             justify-content: space-between;
             .price {

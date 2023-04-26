@@ -11,15 +11,15 @@
       </div>
       <van-icon class="arrow" name="arrow" />
     </div>
-    <div class="good">
-      <div class="good-item" v-for="(item, index) in state.cartList" :key="index">
-        <div class="good-img"><img :src="$filters.prefix(item.goodsCoverImg)" alt=""></div>
-        <div class="good-desc">
-          <div class="good-title">
-            <span>{{ item.goodsName }}</span>
-            <span>x{{ item.goodsCount }}</span>
+    <div class="book">
+      <div class="book-item" v-for="(item, index) in state.cartList" :key="index">
+        <div class="book-img"><img :src="$filters.prefix(item.booksCoverImg)" alt=""></div>
+        <div class="book-desc">
+          <div class="book-title">
+            <span>{{ item.booksName }}</span>
+            <span>x{{ item.booksCount }}</span>
           </div>
-          <div class="good-btn">
+          <div class="book-btn">
             <div class="price">¥{{ item.sellingPrice }}</div>
           </div>
         </div>
@@ -27,7 +27,7 @@
     </div>
     <div class="pay-wrap">
       <div class="price">
-        <span>商品金额</span>
+        <span>图书金额</span>
         <span>¥{{ total }}</span>
       </div>
       <van-button @click="handleCreateOrder" class="pay-btn" color="#1baeae" type="primary" block>生成订单</van-button>
@@ -121,7 +121,7 @@ const handlePayOrder = async (type) => {
 const total = computed(() => {
   let sum = 0
   state.cartList.forEach(item => {
-    sum += item.goodsCount * item.sellingPrice
+    sum += item.booksCount * item.sellingPrice
   })
   return sum
 })
@@ -160,29 +160,29 @@ const total = computed(() => {
         content: '';
       }
     }
-    .good {
+    .book {
       margin-bottom: 120px;
     }
-    .good-item {
+    .book-item {
       padding: 10px;
       background: #fff;
       display: flex;
-      .good-img {
+      .book-img {
         img {
           .wh(100px, 100px)
         }
       }
-      .good-desc {
+      .book-desc {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         flex: 1;
         padding: 20px;
-        .good-title {
+        .book-title {
           display: flex;
           justify-content: space-between;
         }
-        .good-btn {
+        .book-btn {
           display: flex;
           justify-content: space-between;
           .price {

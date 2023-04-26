@@ -1,6 +1,6 @@
 <template>
   <div class="user-box">
-    <s-header :name="'我的'"></s-header>
+    <s-header :name="'我的设置'"></s-header>
     <van-skeleton title :avatar="true" :row="3" :loading="state.loading">
       <div class="user-info">
         <div class="info">
@@ -82,8 +82,8 @@ const goTo = (r, query) => {
       width: 94%;
       margin: 10px;
       height: 115px;
-      background: linear-gradient(90deg, @primary, #51c7c7);
-      box-shadow: 0 2px 5px #269090;
+      background: linear-gradient(90deg, @primary, #cfbfef);
+      box-shadow: 0 2px 5px #a5a5ea;
       border-radius: 6px;
       .info {
         position: relative;

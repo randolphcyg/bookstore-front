@@ -1,32 +1,31 @@
 <template>
   <div class="product-detail">
-    <s-header :name="'商品详情'"></s-header>
+    <s-header :name="'图书详情'"></s-header>
     <div class="detail-content">
       <div class="detail-swipe-wrap">
         <van-swipe class="my-swipe" indicator-color="#1baeae">
-          <van-swipe-item v-for="(item, index) in state.detail.goodsCarouselList" :key="index">
+          <van-swipe-item v-for="(item, index) in state.detail.booksCarouselList" :key="index">
             <img :src="item" alt="">
           </van-swipe-item>
         </van-swipe>
       </div>
       <div class="product-info">
         <div class="product-title">
-          {{ state.detail.goodsName || '' }}
+          {{ state.detail.booksName || '' }}
         </div>
         <div class="product-desc">免邮费 顺丰快递</div>
         <div class="product-price">
           <span>¥{{ state.detail.sellingPrice || '' }}</span>
-          <!-- <span>库存203</span> -->
         </div>
       </div>
       <div class="product-intro">
         <ul>
           <li>概述</li>
           <li>参数</li>
-          <li>安装服务</li>
+          <li>售后服务</li>
           <li>常见问题</li>
         </ul>
-        <div class="product-content" v-html="state.detail.goodsDetailContent || ''"></div>
+        <div class="product-content" v-html="state.detail.booksDetailContent || ''"></div>
       </div>
     </div>
     <van-action-bar>
@@ -42,9 +41,8 @@
 import { reactive, onMounted, nextTick } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useCartStore } from '@/stores/cart'
-import { getDetail } from '@/service/good'
+import { getDetail } from '@/service/book'
 import { addCart } from '@/service/cart'
-import sHeader from '@/components/SimpleHeader.vue'
 import { showSuccessToast } from 'vant'
 import { prefix } from '@/common/js/utils'
 const route = useRoute()
@@ -53,14 +51,14 @@ const cart = useCartStore()
 
 const state = reactive({
   detail: {
-    goodsCarouselList: []
+    booksCarouselList: []
   }
 })
 
 onMounted(async () => {
   const { id } = route.params
   const { data } = await getDetail(id)
-  data.goodsCarouselList = data.goodsCarouselList.map(i => prefix(i))
+  data.booksCarouselList = data.booksCarouselList.map(i => prefix(i))
   state.detail = data
   cart.updateCart()
 })
@@ -80,13 +78,13 @@ const goTo = () => {
 }
 
 const handleAddCart = async () => {
-  const { resultCode } = await addCart({ goodsCount: 1, goodsId: state.detail.goodsId })
+  const { resultCode } = await addCart({ booksCount: 1, booksId: state.detail.booksId })
   if (resultCode === 200 ) showSuccessToast('添加成功')
   cart.updateCart()
 }
 
 const goToCart = async () => {
-  await addCart({ goodsCount: 1, goodsId: state.detail.goodsId })
+  await addCart({ booksCount: 1, booksId: state.detail.booksId })
   cart.updateCart()
   router.push({ path: '/cart' })
 }
@@ -121,7 +119,7 @@ const goToCart = async () => {
         .my-swipe .van-swipe-item {
           img {
             width: 100%;
-            // height: 300px;
+            // height: 200px;
           }
         }
       }

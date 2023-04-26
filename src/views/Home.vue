@@ -20,42 +20,42 @@
         <span>{{item.name}}</span>
       </div>
     </div>
-    <div class="good">
-      <header class="good-header">新品上线</header>
+    <div class="book">
+      <header class="book-header">新品上线</header>
       <van-skeleton title :row="3" :loading="state.loading">
-        <div class="good-box">
-          <div class="good-item" v-for="item in state.newGoodses" :key="item.goodsId" @click="goToDetail(item)">
-            <img :src="$filters.prefix(item.goodsCoverImg)" alt="">
-            <div class="good-desc">
-              <div class="title">{{ item.goodsName }}</div>
+        <div class="book-box">
+          <div class="book-item" v-for="item in state.newBooks" :key="item.booksId" @click="goToDetail(item)">
+            <img :src="$filters.prefix(item.booksCoverImg)" alt="" width="80" height="160">
+            <div class="book-desc">
+              <div class="title">{{ item.booksName }}</div>
               <div class="price">¥ {{ item.sellingPrice }}</div>
             </div>
           </div>
         </div>
       </van-skeleton>
     </div>
-    <div class="good">
-      <header class="good-header">热门商品</header>
+    <div class="book">
+      <header class="book-header">热门图书</header>
       <van-skeleton title :row="3" :loading="state.loading">
-        <div class="good-box">
-          <div class="good-item" v-for="item in state.hots" :key="item.goodsId" @click="goToDetail(item)">
-            <img :src="$filters.prefix(item.goodsCoverImg)" alt="">
-            <div class="good-desc">
-              <div class="title">{{ item.goodsName }}</div>
+        <div class="book-box">
+          <div class="book-item" v-for="item in state.hots" :key="item.booksId" @click="goToDetail(item)">
+            <img :src="$filters.prefix(item.booksCoverImg)" alt="" width="80" height="160">
+            <div class="book-desc">
+              <div class="title">{{ item.booksName }}</div>
               <div class="price">¥ {{ item.sellingPrice }}</div>
             </div>
           </div>
         </div>
       </van-skeleton>
     </div>
-    <div class="good" :style="{ paddingBottom: '100px'}">
-      <header class="good-header">最新推荐</header>
+    <div class="book" :style="{ paddingBottom: '100px'}">
+      <header class="book-header">最新推荐</header>
       <van-skeleton title :row="3" :loading="state.loading">
-        <div class="good-box">
-          <div class="good-item" v-for="item in state.recommends" :key="item.goodsId" @click="goToDetail(item)">
-            <img :src="$filters.prefix(item.goodsCoverImg)" alt="">
-            <div class="good-desc">
-              <div class="title">{{ item.goodsName }}</div>
+        <div class="book-box">
+          <div class="book-item" v-for="item in state.recommends" :key="item.booksId" @click="goToDetail(item)">
+            <img :src="$filters.prefix(item.booksCoverImg)" alt="" width="80" height="160">
+            <div class="book-desc">
+              <div class="title">{{ item.booksName }}</div>
               <div class="price">¥ {{ item.sellingPrice }}</div>
             </div>
           </div>
@@ -81,7 +81,7 @@ const state = reactive({
   isLogin: false, // 是否已登录
   headerScroll: false, // 滚动透明判断
   hots: [],
-  newGoodses: [],
+  newBooks: [],
   recommends: [],
   categoryList: [
     {
@@ -141,9 +141,9 @@ onMounted(async () => {
   });
   const { data } = await getHome()
   state.swiperList = data.carousels
-  state.newGoodses = data.newGoodses
-  state.hots = data.hotGoodses
-  state.recommends = data.recommendGoodses
+  state.newBooks = data.newBooks
+  state.hots = data.hotBooks
+  state.recommends = data.recommendBooks
   state.loading = false
   closeToast()
 })
@@ -156,7 +156,7 @@ nextTick(() => {
 })
 
 const goToDetail = (item) => {
-  router.push({ path: `/product/${item.goodsId}` })
+  router.push({ path: `/product/${item.booksId}` })
 }
 
 const tips = () => {
@@ -247,8 +247,8 @@ const tips = () => {
       }
     }
   }
-  .good {
-    .good-header {
+  .book {
+    .book-header {
       background: #f9f9f9;
       height: 50px;
       line-height: 50px;
@@ -257,26 +257,26 @@ const tips = () => {
       font-size: 16px;
       font-weight: 500;
     }
-    .good-box {
+    .book-box {
       display: flex;
       justify-content: flex-start;
       flex-wrap: wrap;
-      .good-item {
+      .book-item {
         box-sizing: border-box;
         width: 50%;
         border-bottom: 1PX solid #e9e9e9;
         padding: 10px 10px;
         img {
           display: block;
-          width: 120px;
+          width: 100px;
           margin: 0 auto;
         }
-        .good-desc {
+        .book-desc {
           text-align: center;
           font-size: 14px;
           padding: 10px 0;
           .title {
-            color: #222333;
+            color: #eeeef3;
           }
           .price {
             color: @primary;

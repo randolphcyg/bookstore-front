@@ -20,7 +20,7 @@
     </div>
     <div class="order-price">
       <div class="price-item">
-        <label>商品金额：</label>
+        <label>图书金额：</label>
         <span>¥ {{ state.detail.totalPrice }}</span>
       </div>
       <div class="price-item">
@@ -30,13 +30,13 @@
     </div>
     <van-card
       v-for="item in state.detail.bookstoreOrderItemVOS"
-      :key="item.goodsId"
+      :key="item.booksId"
       style="background: #fff"
-      :num="item.goodsCount"
+      :num="item.booksCount"
       :price="item.sellingPrice"
       desc="全场包邮"
-      :title="item.goodsName"
-      :thumb="$filters.prefix(item.goodsCoverImg)"
+      :title="item.booksName"
+      :thumb="$filters.prefix(item.booksCoverImg)"
     />
     <van-popup
       v-model:show="state.showPay"
