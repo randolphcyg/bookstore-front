@@ -119,7 +119,6 @@ const goToCart = async () => {
         .my-swipe .van-swipe-item {
           img {
             width: 100%;
-            // height: 200px;
           }
         }
       }
