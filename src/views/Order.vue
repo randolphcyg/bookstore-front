@@ -146,8 +146,8 @@ const onRefresh = () => {
         background: #f9f9f9;
       }
       .order-item-box {
-        margin: 20px 10px;
-        background-color: #fff;
+        margin: 30px 20px;
+        background-color: #eaffd8;
         .order-item-header {
           padding: 10px 20px 0 20px;
           display: flex;
