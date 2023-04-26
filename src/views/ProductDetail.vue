@@ -106,7 +106,6 @@ const goToCart = async () => {
       padding: 0 10px;
       .boxSizing();
       color: #252525;
-      background: #fff;
       border-bottom: 1px solid #dcdcdc;
       .product-name {
         font-size: 14px;
@@ -129,7 +128,6 @@ const goToCart = async () => {
         .product-title {
           font-size: 18px;
           text-align: left;
-          color: #333;
         }
         .product-desc {
           font-size: 14px;

@@ -184,8 +184,6 @@ const allCheck = () => {
       line-height: 44px;
       padding: 0 10px;
       .boxSizing();
-      color: #252525;
-      background: #fff;
       border-bottom: 1px solid #dcdcdc;
       .cart-name {
         font-size: 14px;
@@ -208,7 +206,6 @@ const allCheck = () => {
           flex: 1;
           padding: 20px;
           .book-title {
-            color: #d2cdcd;
             font-size: 14px;
             display: flex;
             justify-content: space-between;

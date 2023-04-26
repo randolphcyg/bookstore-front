@@ -210,7 +210,6 @@ const changeTab = ({ name }) => {
             max-height: 40px;
             line-height: 20px;
             font-size: 15px;
-            color: #eceaea;
             overflow: hidden;
             text-overflow:ellipsis;
             white-space: nowrap;
@@ -221,7 +220,6 @@ const changeTab = ({ name }) => {
             padding: 10px 0;
             line-height: 25px;
             font-size: 13px;
-            color: #f7afaf;
             overflow: hidden;
           }
           .price {

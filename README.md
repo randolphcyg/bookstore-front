@@ -1,5 +1,10 @@
 # bookstore-front
 
-cnmp install || nmap install
+安装依赖
+nmap install
 
-vite启动
+启动
+vite
+
+打包
+vite build
