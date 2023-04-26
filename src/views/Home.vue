@@ -268,7 +268,7 @@ const tips = () => {
         padding: 10px 10px;
         img {
           display: block;
-          width: 100px;
+          width: 120px;
           margin: 0 auto;
         }
         .book-desc {

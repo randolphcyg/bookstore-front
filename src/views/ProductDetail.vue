@@ -43,6 +43,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { useCartStore } from '@/stores/cart'
 import { getDetail } from '@/service/book'
 import { addCart } from '@/service/cart'
+import sHeader from '@/components/SimpleHeader.vue'
 import { showSuccessToast } from 'vant'
 import { prefix } from '@/common/js/utils'
 const route = useRoute()
