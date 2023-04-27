@@ -11,6 +11,7 @@
     "axios": "^1.2.6",
     "better-scroll": "2.3.0",
     "bright-comment": "^1.5.7",
+    "element-plus": "^2.3.4",
     "element-ui": "^2.15.13",
     "js-md5": "^0.7.3",
     "lib-flexible": "^0.3.2",

@@ -30,7 +30,11 @@
     </div>
 
     <div class="product-comment">
-      <comment id="comment" :comments="state.comments"></comment>
+      <comment id="comment" v-bind:detail="{
+        booksId: state.detail.booksId,
+        comments: state.detail.comments,
+        }">
+      </comment>
     </div>
 
     <van-action-bar>
@@ -59,7 +63,10 @@ const cart = useCartStore()
 
 const state = reactive({
   detail: {
-    booksCarouselList: []
+    booksId: 0,
+    booksName: '',
+    booksCarouselList: [],
+    comments: [],
   },
 
   // 评论数据
@@ -71,9 +78,6 @@ const state = reactive({
 onMounted(async () => {
   const {id} = route.params
   const {data} = await getDetail(id)
-
-  // 父组件评论数据
-  state.comments = data.bookStoreBookCommentVOS
 
   data.booksCarouselList = data.booksCarouselList.map(i => prefix(i))
   state.detail = data

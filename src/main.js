@@ -3,6 +3,7 @@ import { createPinia } from 'pinia'
 import { ActionBar, ActionBarIcon, ActionBarButton, Divider, Popup, Overlay, Loading, Dialog, ContactCard, Form, AddressEdit, AddressList, Field, CellGroup, Cell, SwipeCell, Icon, Stepper, Card, Checkbox, CheckboxGroup, Button, Swipe, SwipeItem, PullRefresh, List, Tab, Tabs, SubmitBar, Toast, Skeleton } from 'vant'
 
 import App from './App.vue'
+import ElementPlus from 'element-plus'
 import router from './router'
 import 'lib-flexible/flexible'
 
@@ -44,6 +45,7 @@ app.use(ActionBarButton)
   .use(Checkbox)
   .use(CheckboxGroup)
   .use(Skeleton)
+  .use(ElementPlus)
 
 // 全局过滤器
 app.config.globalProperties.$filters = {

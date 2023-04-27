@@ -19,7 +19,7 @@
         <el-button class="reply-btn" size="medium" @click="sendComment" type="primary">发表评论</el-button>
       </div>
     </div>
-    <div v-for="(item,i) in comments" :key="i" class="author-title reply-father">
+    <div v-for="(item,i) in detail.comments" :key="i" class="author-title reply-father">
       <el-avatar class="header-img" :size="40" :src="item.headImg"></el-avatar>
       <div class="author-info">
         <span class="author-name">{{ item.name }}</span>
@@ -73,7 +73,10 @@
 </template>
 
 <script>
-import {ElButton, ElAvatar} from 'element-plus'
+import {showFailToast, showToast} from "vant/lib/toast/function-call";
+import {addCart} from "@/service/cart";
+import {showSuccessToast} from "vant";
+import {addComment, addCommentReply} from "@/service/comment";
 
 const clickoutside = {
   // 初始化指令
@@ -103,8 +106,18 @@ const clickoutside = {
   },
 };
 
+const handleComment = async (params) => {
+  const {resultCode} = await addComment(params)
+  if (resultCode === 200) showSuccessToast('添加成功')
+}
+
+const handleCommentReply = async (params) => {
+  const {resultCode} = await addCommentReply(params)
+  if (resultCode === 200) showSuccessToast('添加成功')
+}
+
 export default {
-  name: 'ArticleComment',
+  // name: 'ArticleComment',
   data() {
     return {
       btnShow: false,
@@ -120,8 +133,15 @@ export default {
   directives: {clickoutside},
 
   props: {
-    comments: [],  //接收父组件数据
+   detail: {
+     booksId: 0,
+     comments: [],
+   },
     required: true
+  },
+  mounted() {
+    this.detail.booksId
+    this.detail.comments
   },
   methods: {
     inputFocus() {
@@ -139,60 +159,56 @@ export default {
       replyInput.style.border = "none"
     },
     showReplyInput(i, name, id) {
-      this.comments[this.index].inputShow = false
+      this.detail.comments[this.index].inputShow = false
       this.index = i
-      this.comments[i].inputShow = true
+      this.detail.comments[i].inputShow = true
       this.to = name
       this.toId = id
     },
     _inputShow(i) {
-      return this.comments[i].inputShow
+      return this.detail.comments[i].inputShow
     },
     sendComment() {
       if (!this.replyComment) {
-        this.$message({
-          showClose: true,
-          type: 'warning',
-          message: '评论不能为空'
-        })
+        showFailToast('评论不能为空!')
       } else {
-        let a = {}
-        let input = document.getElementById('replyInput')
         let timeNow = new Date().getTime();
         let time = this.dateStr(timeNow);
-        a.name = this.myName
-        a.comment = this.replyComment
-        a.headImg = this.myHeader
-        a.time = time
-        a.commentNum = 0
-        a.like = 0
-        this.comments.push(a)
-        this.replyComment = ''
-        input.innerHTML = '';
-
+        let params = {
+          booksId: this.detail.booksId,
+          comment: this.replyComment,
+          time: time,
+          name: this.myName,
+          commentNum: 0,
+          like: 0,
+        }
+        console.log("@@@@  sendComment @@@@@")
+        console.log(params)
+        document.getElementById("replyInput").innerHTML = ""
+        handleComment(params)
       }
     },
     sendCommentReply(i, j) {
       if (!this.replyComment) {
-        this.$message({
-          showClose: true,
-          type: 'warning',
-          message: '评论不能为空'
-        })
+        showFailToast('评论不能为空!')
       } else {
-        let a = {}
         let timeNow = new Date().getTime();
         let time = this.dateStr(timeNow);
-        a.from = this.myName
-        a.to = this.to
-        a.fromHeadImg = this.myHeader
-        a.comment = this.replyComment
-        a.time = time
-        a.commentNum = 0
-        a.like = 0
-        this.comments[i].reply.push(a)
-        this.replyComment = ''
+        let params = {
+          id: this.myId,
+          to: this.toId,
+          booksId: this.detail.booksId,
+          comment: this.replyComment,
+          time: time,
+          name: this.myName,
+          commentNum: 0,
+          like: 0,
+        }
+        console.log("@@@@  sendComment @@@@@")
+        console.log(this.detail.comments[i])
+        console.log(params)
         document.getElementsByClassName("reply-comment-input")[i].innerHTML = ""
+        handleCommentReply()
       }
     },
     onDivInput: function (e) {
