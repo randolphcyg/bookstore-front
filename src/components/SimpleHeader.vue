@@ -5,12 +5,13 @@
     <div class="simple-header-name">{{ name }}</div>
     <i class="nbicon nbmore"></i>
   </header>
-  <div class="block" />
+  <div class="block"/>
 </template>
 
 <script>
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
+import {ref} from 'vue'
+import {useRouter} from 'vue-router'
+
 export default {
   props: {
     name: {
@@ -34,7 +35,7 @@ export default {
       if (!props.back) {
         router.go(-1)
       } else {
-        router.push({ path: props.back })
+        router.push({path: props.back})
       }
       ctx.emit('callback')
     }
@@ -47,24 +48,27 @@ export default {
 </script>
 
 <style lang="less" scoped>
-  @import '../common/style/mixin';
-  .simple-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 10000;
-    .fj();
-    .wh(100%, 44px);
-    line-height: 44px;
-    padding: 0 10px;
-    .boxSizing();
-    color: #252525;
-    background: #fff;
-    .simple-header-name {
-      font-size: 14px;
-    }
+@import '../common/style/mixin';
+
+.simple-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10000;
+  .fj();
+  .wh(100%, 44px);
+  line-height: 44px;
+  padding: 0 10px;
+  .boxSizing();
+  color: #252525;
+  background: #fff;
+
+  .simple-header-name {
+    font-size: 14px;
   }
-  .block {
-    height: 44px;
-  }
+}
+
+.block {
+  height: 44px;
+}
 </style>

@@ -2,27 +2,28 @@
   <div class="address-edit-box">
     <s-header :name="`${state.type === 'add' ? '新增地址' : '编辑地址'}`"></s-header>
     <van-address-edit
-      class="edit"
-      :area-list="state.areaList"
-      :address-info="state.addressInfo"
-      :show-delete="state.type === 'edit'"
-      show-set-default
-      show-search-result
-      :search-result="state.searchResult"
-      :area-columns-placeholder="['请选择', '请选择', '请选择']"
-      @save="onSave"
-      @delete="onDelete"
+        class="edit"
+        :area-list="state.areaList"
+        :address-info="state.addressInfo"
+        :show-delete="state.type === 'edit'"
+        show-set-default
+        show-search-result
+        :search-result="state.searchResult"
+        :area-columns-placeholder="['请选择', '请选择', '请选择']"
+        @save="onSave"
+        @delete="onDelete"
     />
   </div>
 </template>
 
 <script setup>
-import { reactive, onMounted } from 'vue'
-import { showToast } from 'vant'
+import {reactive, onMounted} from 'vue'
+import {showToast} from 'vant'
 import sHeader from '@/components/SimpleHeader.vue'
-import { addAddress, EditAddress, DeleteAddress, getAddressDetail } from '@/service/address'
-import { tdist } from '@/common/js/utils'
-import { useRoute, useRouter } from 'vue-router'
+import {addAddress, EditAddress, DeleteAddress, getAddressDetail} from '@/service/address'
+import {tdist} from '@/common/js/utils'
+import {useRoute, useRouter} from 'vue-router'
+
 const route = useRoute()
 const router = useRouter()
 const state = reactive({
@@ -54,12 +55,12 @@ onMounted(async () => {
   state.areaList.city_list = _city_list
   state.areaList.county_list = _county_list
 
-  const { addressId, type, from } = route.query
+  const {addressId, type, from} = route.query
   state.addressId = addressId
   state.type = type
   state.from = from || ''
   if (type === 'edit') {
-    const { data: addressDetail } = await getAddressDetail(addressId)
+    const {data: addressDetail} = await getAddressDetail(addressId)
     let _areaCode = ''
     const province = tdist.getLev1()
     Object.entries(state.areaList.county_list).forEach(([id, text]) => {
@@ -120,23 +121,26 @@ const onDelete = async () => {
 </script>
 
 <style lang="less">
-  @import '../common/style/mixin';
-  .edit {
-    .van-field__body {
-      textarea {
-        height: 26px!important;
-      }
+@import '../common/style/mixin';
+
+.edit {
+  .van-field__body {
+    textarea {
+      height: 26px !important;
     }
   }
-  .address-edit-box {
-    .van-address-edit {
-      .van-button--danger {
-        background: @primary;
-        border-color: @primary;
-      }
-      .van-switch--on {
-        background: @primary;
-      }
+}
+
+.address-edit-box {
+  .van-address-edit {
+    .van-button--danger {
+      background: @primary;
+      border-color: @primary;
+    }
+
+    .van-switch--on {
+      background: @primary;
     }
   }
+}
 </style>

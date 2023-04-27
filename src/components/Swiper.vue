@@ -20,10 +20,10 @@ export default {
 </script>
 
 <style lang='less' scoped>
-  .my-swipe {
-    img {
-      width: 100%;
-      height: 100%;
-    }
+.my-swipe {
+  img {
+    width: 100%;
+    height: 100%;
   }
+}
 </style>

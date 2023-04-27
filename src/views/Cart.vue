@@ -5,7 +5,7 @@
       <van-checkbox-group @change="groupChange" v-model="state.result" ref="checkboxGroup">
         <van-swipe-cell :right-width="50" v-for="(item, index) in state.list" :key="index">
           <div class="book-item">
-            <van-checkbox :name="item.cartItemId" />
+            <van-checkbox :name="item.cartItemId"/>
             <div class="book-img"><img :src="$filters.prefix(item.booksCoverImg)" alt=""></div>
             <div class="book-desc">
               <div class="book-title">
@@ -15,36 +15,36 @@
               <div class="book-btn">
                 <div class="price">¥{{ item.sellingPrice }}</div>
                 <van-stepper
-                  integer
-                  :min="1"
-                  :max="5"
-                  :model-value="item.booksCount"
-                  :name="item.cartItemId"
-                  async-change
-                  @change="onChange"
+                    integer
+                    :min="1"
+                    :max="5"
+                    :model-value="item.booksCount"
+                    :name="item.cartItemId"
+                    async-change
+                    @change="onChange"
                 />
               </div>
             </div>
           </div>
           <template #right>
             <van-button
-              square
-              icon="delete"
-              type="danger"
-              class="delete-button"
-              @click="deleteBook(item.cartItemId)"
+                square
+                icon="delete"
+                type="danger"
+                class="delete-button"
+                @click="deleteBook(item.cartItemId)"
             />
           </template>
         </van-swipe-cell>
       </van-checkbox-group>
     </div>
     <van-submit-bar
-      v-if="state.list.length > 0"
-      class="submit-all van-hairline--top"
-      :price="total * 100"
-      button-text="结算"
-      button-type="primary"
-      @submit="onSubmit"
+        v-if="state.list.length > 0"
+        class="submit-all van-hairline--top"
+        :price="total * 100"
+        button-text="结算"
+        button-type="primary"
+        @submit="onSubmit"
     >
       <van-checkbox @click="allCheck" v-model:checked="state.checkAll">全选</van-checkbox>
     </van-submit-bar>
@@ -58,13 +58,13 @@
 </template>
 
 <script setup>
-import { reactive, onMounted, computed } from 'vue'
-import { useRouter } from 'vue-router'
-import { useCartStore } from '@/stores/cart'
-import { showToast, showLoadingToast, closeToast, showFailToast } from 'vant'
+import {reactive, onMounted, computed} from 'vue'
+import {useRouter} from 'vue-router'
+import {useCartStore} from '@/stores/cart'
+import {showToast, showLoadingToast, closeToast, showFailToast} from 'vant'
 import navBar from '@/components/NavBar.vue'
 import sHeader from '@/components/SimpleHeader.vue'
-import { getCart, deleteCartItem, modifyCart } from '@/service/cart'
+import {getCart, deleteCartItem, modifyCart} from '@/service/cart'
 
 const router = useRouter()
 const cart = useCartStore()
@@ -81,8 +81,8 @@ onMounted(() => {
 })
 
 const init = async () => {
-  showLoadingToast({ message: '加载中...', forbidClick: true });
-  const { data } = await getCart({ pageNumber: 1 })
+  showLoadingToast({message: '加载中...', forbidClick: true});
+  const {data} = await getCart({pageNumber: 1})
   state.list = data
   state.result = data.map(item => item.cartItemId)
   closeToast()
@@ -102,7 +102,7 @@ const goBack = () => {
 }
 
 const goTo = () => {
-  router.push({ path: '/home' })
+  router.push({path: '/home'})
 }
 
 const onChange = async (value, detail) => {
@@ -118,9 +118,9 @@ const onChange = async (value, detail) => {
    * 这里的操作是因为，后面修改购物车后，手动添加的计步器的数据，为了防止数据不对
    * 这边做一个拦截处理，如果点击的时候，购物车单项的 booksCount 等于点击的计步器数字，
    * 那么就不再进行修改操作
-  */
+   */
   if (state.list.find(item => item.cartItemId === detail.name)?.booksCount === value) return
-  showLoadingToast({ message: '修改中...', forbidClick: true });
+  showLoadingToast({message: '修改中...', forbidClick: true});
   const params = {
     cartItemId: detail.name,
     booksCount: value
@@ -129,7 +129,7 @@ const onChange = async (value, detail) => {
   /**
    * 修改完成后，没有请求购物车列表，是因为闪烁的问题，
    * 这边手动给操作的购物车图书修改数据
-  */
+   */
   state.list.forEach(item => {
     if (item.cartItemId === detail.name) {
       item.booksCount = value
@@ -144,7 +144,7 @@ const onSubmit = async () => {
     return
   }
   const params = JSON.stringify(state.result)
-  router.push({ path: '/create-order', query: { cartItemIds: params } })
+  router.push({path: '/create-order', query: {cartItemIds: params}})
 }
 
 const deleteBook = async (id) => {
@@ -172,96 +172,116 @@ const allCheck = () => {
 </script>
 
 <style lang="less">
-  @import '../common/style/mixin';
-  .cart-box {
-    .cart-header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: 10000;
-      .fj();
-      .wh(100%, 44px);
-      line-height: 44px;
-      padding: 0 10px;
-      .boxSizing();
-      border-bottom: 1px solid #dcdcdc;
-      .cart-name {
-        font-size: 14px;
-      }
-    }
-    .cart-body {
-      margin: 16px 0 100px 0;
-      padding-left: 10px;
-      .book-item {
-        display: flex;
-        .book-img {
-          img {
-            .wh(60px, 80px)
-          }
-        }
-        .book-desc {
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-          flex: 1;
-          padding: 20px;
-          .book-title {
-            font-size: 14px;
-            display: flex;
-            justify-content: space-between;
-          }
-          .book-btn {
-            display: flex;
-            justify-content: space-between;
-            .price {
-              font-size: 16px;
-              color: red;
-              line-height: 28px;
-            }
-            .van-icon-delete {
-              font-size: 20px;
-              margin-top: 4px;
-            }
-          }
-        }
-      }
-      .delete-button {
-        width: 50px;
-        height: 100%;
-      }
-    }
-    .empty {
-      width: 50%;
-      margin: 0 auto;
-      text-align: center;
-      margin-top: 200px;
-      .empty-cart {
-        width: 150px;
-        margin-bottom: 20px;
-      }
-      .van-icon-smile-o {
-        font-size: 50px;
-      }
-      .title {
-        font-size: 16px;
-        margin-bottom: 20px;
-      }
-    }
-    .submit-all {
-      margin-bottom: 64px;
-      .van-checkbox {
-        margin-left: 10px
-      }
-      .van-submit-bar__text {
-        margin-right: 10px
-      }
-      .van-submit-bar__button {
-        background: @primary;
-      }
-    }
-    .van-checkbox__icon--checked .van-icon {
-      background-color: @primary;
-      border-color: @primary;
+@import '../common/style/mixin';
+
+.cart-box {
+  .cart-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10000;
+    .fj();
+    .wh(100%, 44px);
+    line-height: 44px;
+    padding: 0 10px;
+    .boxSizing();
+    border-bottom: 1px solid #dcdcdc;
+
+    .cart-name {
+      font-size: 14px;
     }
   }
+
+  .cart-body {
+    margin: 16px 0 100px 0;
+    padding-left: 10px;
+
+    .book-item {
+      display: flex;
+
+      .book-img {
+        img {
+          .wh(60px, 80px)
+        }
+      }
+
+      .book-desc {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        flex: 1;
+        padding: 20px;
+
+        .book-title {
+          font-size: 14px;
+          display: flex;
+          justify-content: space-between;
+        }
+
+        .book-btn {
+          display: flex;
+          justify-content: space-between;
+
+          .price {
+            font-size: 16px;
+            color: red;
+            line-height: 28px;
+          }
+
+          .van-icon-delete {
+            font-size: 20px;
+            margin-top: 4px;
+          }
+        }
+      }
+    }
+
+    .delete-button {
+      width: 50px;
+      height: 100%;
+    }
+  }
+
+  .empty {
+    width: 50%;
+    margin: 0 auto;
+    text-align: center;
+    margin-top: 200px;
+
+    .empty-cart {
+      width: 150px;
+      margin-bottom: 20px;
+    }
+
+    .van-icon-smile-o {
+      font-size: 50px;
+    }
+
+    .title {
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+  }
+
+  .submit-all {
+    margin-bottom: 64px;
+
+    .van-checkbox {
+      margin-left: 10px
+    }
+
+    .van-submit-bar__text {
+      margin-right: 10px
+    }
+
+    .van-submit-bar__button {
+      background: @primary;
+    }
+  }
+
+  .van-checkbox__icon--checked .van-icon {
+    background-color: @primary;
+    border-color: @primary;
+  }
+}
 </style>

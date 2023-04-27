@@ -5,7 +5,8 @@
 </template>
 
 <script setup>
-import { reactive, onMounted, ref } from 'vue'
+import {reactive, onMounted, ref} from 'vue'
+
 const verify = ref(null)
 const state = reactive({
   pool: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890', // 字符串
@@ -13,7 +14,7 @@ const state = reactive({
   height: 40,
   imgCode: ''
 })
-defineExpose({ state })
+defineExpose({state})
 onMounted(() => {
   // 初始化绘制图片验证码
   state.imgCode = draw()
