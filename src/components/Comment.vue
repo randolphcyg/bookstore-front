@@ -4,7 +4,6 @@
       评论区
     </div>
     <div v-clickoutside="hideReplyBtn" @click="inputFocus" class="my-reply">
-      <el-avatar class="header-img" :size="40" :src="myHeader"></el-avatar>
       <div class="reply-info">
         <div
             tabindex="0"
@@ -24,15 +23,9 @@
     </div>
 
     <div v-for="(item,i) in detail.comments" :key="i" class="author-title reply-father">
-      <el-avatar class="header-img" :size="40" :src="item.headImg"></el-avatar>
       <div class="author-info">
         <span class="author-name">{{ item.name }}</span>
         <span class="author-time">{{ item.time }}</span>
-      </div>
-      <div class="icon-btn">
-        <span @click="showReplyInput(i,item.name,item.id)"><i
-            class="iconfont el-icon-s-comment"></i>{{ item.commentNum }}</span>
-        <i class="iconfont el-icon-caret-top"></i>{{ item.like }}
       </div>
       <div class="talk-box">
         <p>
@@ -41,15 +34,9 @@
       </div>
       <div class="reply-box">
         <div v-for="(reply,j) in item.reply" :key="j" class="author-title">
-          <el-avatar class="header-img" :size="40" :src="reply.fromHeadImg"></el-avatar>
           <div class="author-info">
             <span class="author-name">{{ reply.from }}</span>
             <span class="author-time">{{ reply.time }}</span>
-          </div>
-          <div class="icon-btn">
-            <span @click="showReplyInput(i,reply.from,reply.id)"><i
-                class="iconfont el-icon-s-comment"></i>{{ reply.commentNum }}</span>
-            <i class="iconfont el-icon-caret-top"></i>{{ reply.like }}
           </div>
           <div class="talk-box">
             <p>
@@ -57,19 +44,16 @@
               <span class="reply">{{ reply.comment }}</span>
             </p>
           </div>
-          <div class="reply-box">
 
-          </div>
         </div>
       </div>
       <div v-show="_inputShow(i)" class="my-reply my-comment-reply">
-        <el-avatar class="header-img" :size="40" :src="myHeader"></el-avatar>
         <div class="reply-info">
           <div tabindex="0" contenteditable="true" spellcheck="false" placeholder="输入评论..." @input="onDivInput($event)"
                class="reply-input reply-comment-input"></div>
         </div>
         <div class=" reply-btn-box">
-          <el-button class="reply-btn" size="medium" @click="sendCommentReply(i,j)" type="primary">发表评论</el-button>
+          <el-button class="reply-btn" size="default" @click="sendCommentReply(i,j)" type="primary">发表评论</el-button>
         </div>
       </div>
     </div>
@@ -112,20 +96,20 @@ const clickoutside = {
 
 const handleComment = async (params) => {
   const {resultCode} = await addComment(params)
-  // if (resultCode === 200) {
-  //   showSuccessToast('发表成功！')
-  // } else {
-  //   showFailToast("未购买该书，无权发表评论！")
-  // }
+  if (resultCode === 200) {
+    showSuccessToast('发表成功！')
+  } else {
+    showFailToast("未购买该书，无权发表评论！")
+  }
 }
 
 const handleCommentReply = async (params) => {
   const {data} = await addCommentReply(params)
-  // if (resultCode === 200) {
-  //   showSuccessToast('发表成功！')
-  // } else {
-  //   showFailToast("未购买该书，无权发表评论！")
-  // }
+  if (resultCode === 200) {
+    showSuccessToast('发表成功！')
+  } else {
+    showFailToast("未购买该书，无权发表评论！")
+  }
 }
 
 function getCurrentDateTime() {
@@ -141,11 +125,6 @@ export default {
       btnShow: false,
       index: '0',
       replyComment: '',
-      myName: '',
-      myHeader: '',
-      myId: -1,
-      to: '',
-      toId: -1,
     }
   },
   directives: {clickoutside},
@@ -158,12 +137,10 @@ export default {
     required: true
   },
   mounted() {
-    this.detail.booksId
     this.detail.comments
   },
   methods: {
     inputFocus() {
-      console.log("要发表了！！！！！！！！！！！！")
       const replyInput = document.getElementById('replyInput');
       replyInput.style.padding = "8px 8px"
       replyInput.style.border = "2px solid blue"
@@ -195,16 +172,11 @@ export default {
           booksId: this.detail.booksId,
           comment: this.replyComment,
           time: getCurrentDateTime(),
-          name: this.myName,
-          commentNum: 0,
-          like: 0,
-          to: '',
           toId: -1,
-          fromId: -1,
-          Name: '',
-          headImg: '',
         }
         document.getElementById("replyInput").innerHTML = ""
+        console.log("!!!@@@@  sendComment @@@@@")
+        console.log(params)
         handleComment(params)
       }
     },
@@ -213,17 +185,14 @@ export default {
         showFailToast('评论不能为空!')
       } else {
         let params = {
-          fromId: this.myId,
-          to: this.toId,
           booksId: this.detail.booksId,
           comment: this.replyComment,
           time: getCurrentDateTime(),
-          name: this.myName,
-          commentNum: 0,
-          like: 0,
+          toId: this.detail.comments[i].fromId,
+          name: this.detail.comments[i].name,
+          // fromId: ,
         }
-        console.log("@@@@  sendComment @@@@@")
-        console.log(this.detail.comments[i])
+        console.log("!!!@@@@  sendCommentReply @@@@@")
         console.log(params)
         document.getElementsByClassName("reply-comment-input")[i].innerHTML = ""
         handleCommentReply()
@@ -232,6 +201,7 @@ export default {
     onDivInput: function (e) {
       this.replyComment = e.target.innerHTML;
     },
+
     dateStr(date) {
       //获取js 时间戳
       var time = new Date().getTime();
