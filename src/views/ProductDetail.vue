@@ -228,4 +228,10 @@ const goToCart = async () => {
     background: linear-gradient(to right, #0dc3c3, #098888)
   }
 }
+
+.product-comment{
+  height: calc(100vh - 50px);
+  overflow: hidden;
+  overflow-y: auto;
+}
 </style>

@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div class="comment-title">
+      评论区
+    </div>
     <div v-clickoutside="hideReplyBtn" @click="inputFocus" class="my-reply">
       <el-avatar class="header-img" :size="40" :src="myHeader"></el-avatar>
       <div class="reply-info">
@@ -16,9 +19,10 @@
         </div>
       </div>
       <div class="reply-btn-box" v-show="btnShow">
-        <el-button class="reply-btn" size="medium" @click="sendComment" type="primary">发表评论</el-button>
+        <el-button class="reply-btn" size="default" @click="sendComment" type="primary">发表评论</el-button>
       </div>
     </div>
+
     <div v-for="(item,i) in detail.comments" :key="i" class="author-title reply-father">
       <el-avatar class="header-img" :size="40" :src="item.headImg"></el-avatar>
       <div class="author-info">
@@ -76,7 +80,7 @@
 import {showFailToast, showToast} from "vant/lib/toast/function-call";
 import {addCart} from "@/service/cart";
 import {showSuccessToast} from "vant";
-import {addComment, addCommentReply} from "@/service/comment";
+import {addComment, addCommentReply} from "@/service/book";
 
 const clickoutside = {
   // 初始化指令
@@ -108,12 +112,26 @@ const clickoutside = {
 
 const handleComment = async (params) => {
   const {resultCode} = await addComment(params)
-  if (resultCode === 200) showSuccessToast('添加成功')
+  // if (resultCode === 200) {
+  //   showSuccessToast('发表成功！')
+  // } else {
+  //   showFailToast("未购买该书，无权发表评论！")
+  // }
 }
 
 const handleCommentReply = async (params) => {
-  const {resultCode} = await addCommentReply(params)
-  if (resultCode === 200) showSuccessToast('添加成功')
+  const {data} = await addCommentReply(params)
+  // if (resultCode === 200) {
+  //   showSuccessToast('发表成功！')
+  // } else {
+  //   showFailToast("未购买该书，无权发表评论！")
+  // }
+}
+
+function getCurrentDateTime() {
+  const now = new Date();
+  const isoDate = now.toISOString();
+  return isoDate.replace(/Z$/, "-08:00");
 }
 
 export default {
@@ -145,7 +163,8 @@ export default {
   },
   methods: {
     inputFocus() {
-      var replyInput = document.getElementById('replyInput');
+      console.log("要发表了！！！！！！！！！！！！")
+      const replyInput = document.getElementById('replyInput');
       replyInput.style.padding = "8px 8px"
       replyInput.style.border = "2px solid blue"
       replyInput.focus()
@@ -172,18 +191,19 @@ export default {
       if (!this.replyComment) {
         showFailToast('评论不能为空!')
       } else {
-        let timeNow = new Date().getTime();
-        let time = this.dateStr(timeNow);
         let params = {
           booksId: this.detail.booksId,
           comment: this.replyComment,
-          time: time,
+          time: getCurrentDateTime(),
           name: this.myName,
           commentNum: 0,
           like: 0,
+          to: '',
+          toId: -1,
+          fromId: -1,
+          Name: '',
+          headImg: '',
         }
-        console.log("@@@@  sendComment @@@@@")
-        console.log(params)
         document.getElementById("replyInput").innerHTML = ""
         handleComment(params)
       }
@@ -192,14 +212,12 @@ export default {
       if (!this.replyComment) {
         showFailToast('评论不能为空!')
       } else {
-        let timeNow = new Date().getTime();
-        let time = this.dateStr(timeNow);
         let params = {
-          id: this.myId,
+          fromId: this.myId,
           to: this.toId,
           booksId: this.detail.booksId,
           comment: this.replyComment,
-          time: time,
+          time: getCurrentDateTime(),
           name: this.myName,
           commentNum: 0,
           like: 0,
@@ -388,5 +406,10 @@ export default {
 .author-title .reply-box {
   margin: 10px 0 0 50px;
   background-color: #efefef;
+}
+
+.comment-title {
+  font-size: 18px;
+  text-align: left;
 }
 </style>

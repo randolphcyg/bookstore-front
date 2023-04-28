@@ -12,3 +12,10 @@ export function search(params) {
   return axios.get('/search', { params });
 }
 
+export function addComment(params) {
+  return axios.post('/books/comment', params);
+}
+
+export function addCommentReply(params) {
+  return axios.post('/books/commentReply', params);
+}
