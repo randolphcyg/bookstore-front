@@ -21,20 +21,12 @@
       <div class="product-intro">
         <ul>
           <li @click="goComment('intro')">概述</li>
-          <li @click="goComment('comment')">评论</li>
+          <li @click="bookComment(state.detail.booksId)">评论</li>
           <li>售后服务</li>
           <li>常见问题</li>
         </ul>
         <div id="intro" class="product-content" v-html="state.detail.booksDetailContent || ''"></div>
       </div>
-    </div>
-
-    <div class="product-comment">
-      <comment id="comment" v-bind:detail="{
-        booksId: state.detail.booksId,
-        comments: state.detail.comments,
-        }">
-      </comment>
     </div>
 
     <van-action-bar>
@@ -55,23 +47,21 @@ import {addCart} from '@/service/cart'
 import sHeader from '@/components/SimpleHeader.vue'
 import {showSuccessToast} from 'vant'
 import {prefix} from '@/common/js/utils'
-import Comment from '../components/Comment.vue'
 
 const route = useRoute()
 const router = useRouter()
 const cart = useCartStore()
+
+// 跳转评论页面
+const bookComment = (booksId) => {
+  router.push({path: `/comment/${booksId}`})
+}
 
 const state = reactive({
   detail: {
     booksId: 0,
     booksName: '',
     booksCarouselList: [],
-    comments: [],
-  },
-
-  // 评论数据
-  components: {
-    Comment
   },
 })
 
@@ -227,11 +217,5 @@ const goToCart = async () => {
   .van-action-bar-button--danger {
     background: linear-gradient(to right, #0dc3c3, #098888)
   }
-}
-
-.product-comment{
-  height: calc(100vh - 50px);
-  overflow: hidden;
-  overflow-y: auto;
 }
 </style>

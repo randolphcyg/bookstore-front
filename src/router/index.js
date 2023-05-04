@@ -57,6 +57,14 @@ const router = createRouter({
       }
     },
     {
+      path: '/comment/:id',
+      name: 'comment',
+      component: () => import('@/views/Comment.vue'),
+      meta: {
+        index: 2
+      }
+    },
+    {
       path: '/cart',
       name: 'cart',
       component: () => import('@/views/Cart.vue'),
