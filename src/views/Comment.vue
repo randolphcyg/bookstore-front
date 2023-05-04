@@ -53,7 +53,7 @@
       <div class="reply-box">
         <div v-for="(reply,j) in item.reply" :key="j" class="author-title">
           <div class="author-info">
-            <span class="author-name">{{ reply.from }}</span>
+            <span class="author-name">{{ reply.name }}</span>
             <span class="author-time">{{ reply.time }}</span>
           </div>
           <div class="talk-box">
