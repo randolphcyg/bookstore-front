@@ -22,15 +22,12 @@
         <ul>
           <li @click="goComment('intro')">概述</li>
           <li @click="bookComment(state.detail.booksId)">评论</li>
-          <li>售后服务</li>
-          <li>常见问题</li>
         </ul>
         <div id="intro" class="product-content" v-html="state.detail.booksDetailContent || ''"></div>
       </div>
     </div>
 
     <van-action-bar>
-      <van-action-bar-icon icon="chat-o" text="客服"/>
       <van-action-bar-icon icon="cart-o" :badge="!cart.count ? '' : cart.count" @click="goTo()" text="购物车"/>
       <van-action-bar-button type="warning" @click="handleAddCart" text="加入购物车"/>
       <van-action-bar-button type="danger" @click="goToCart" text="立即购买"/>
