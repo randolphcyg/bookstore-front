@@ -40,38 +40,41 @@
       </div>
     </div>
 
-    <div v-for="(item,i) in state.detail.comments" :key="i" class="author-title reply-father">
-      <div class="author-info">
-        <span class="author-name">{{ item.name }}</span>
-        <span class="author-time">{{ item.time }}</span>
-      </div>
-      <div class="talk-box">
-        <p>
-          <span class="reply">{{ item.comment }}</span>
-        </p>
-      </div>
-      <div class="reply-box">
-        <div v-for="(reply,j) in item.reply" :key="j" class="author-title">
-          <div class="author-info">
-            <span class="author-name">{{ reply.name }}</span>
-            <span class="author-time">{{ reply.time }}</span>
-          </div>
-          <div class="talk-box">
-            <p>
-              <span>回复 {{ reply.to }}:</span>
-              <span class="reply">{{ reply.comment }}</span>
-            </p>
-          </div>
+    <div class="comment-content">
+      <div v-for="(item,i) in state.detail.comments" :key="i" class="author-title reply-father">
+        <div class="author-info">
+          <span class="author-name">{{ item.name }}</span>
+          <span class="author-time">{{ item.time }}</span>
+        </div>
+        <div class="talk-box">
+          <p>
+            <span class="reply">{{ item.comment }}</span>
+          </p>
+        </div>
+        <div class="reply-box">
+          <div v-for="(reply,j) in item.reply" :key="j" class="author-title">
+            <div class="author-info">
+              <span class="author-name">{{ reply.name }}</span>
+              <span class="author-time">{{ reply.time }}</span>
+            </div>
+            <div class="talk-box">
+              <p>
+                <span>回复 {{ reply.to }}:</span>
+                <span class="reply">{{ reply.comment }}</span>
+              </p>
+            </div>
 
+          </div>
         </div>
-      </div>
-      <div v-show="_inputShow(i)" class="my-reply my-comment-reply">
-        <div class="reply-info">
-          <div tabindex="0" contenteditable="true" spellcheck="false" placeholder="输入评论..." @input="onDivInput($event)"
-               class="reply-input reply-comment-input"></div>
-        </div>
-        <div class=" reply-btn-box">
-          <el-button class="reply-btn" size="default" @click="sendCommentReply(i,j)" type="primary">发表评论</el-button>
+        <div v-show="_inputShow(i)" class="my-reply my-comment-reply">
+          <div class="reply-info">
+            <div tabindex="0" contenteditable="true" spellcheck="false" placeholder="输入评论..."
+                 @input="onDivInput($event)"
+                 class="reply-input reply-comment-input"></div>
+          </div>
+          <div class=" reply-btn-box">
+            <el-button class="reply-btn" size="default" @click="sendCommentReply(i,j)" type="primary">发表评论</el-button>
+          </div>
         </div>
       </div>
     </div>
@@ -95,7 +98,7 @@ import sHeader from '@/components/SimpleHeader.vue'
 import {showSuccessToast} from 'vant'
 import {prefix} from '@/common/js/utils'
 import {showFailToast} from "vant/lib/toast/function-call";
-import { ClickOutside as vClickOutside } from 'element-plus';
+import {ClickOutside as vClickOutside} from 'element-plus';
 
 const route = useRoute()
 const router = useRouter()
@@ -459,5 +462,9 @@ const goToCart = async () => {
 .comment-title {
   font-size: 18px;
   text-align: left;
+}
+
+.comment-content {
+  height: calc(100vh - 50px);
 }
 </style>
