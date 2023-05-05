@@ -84,7 +84,6 @@ const selectMenu = (index) => {
 }
 
 const selectProduct = (item) => {
-  console.log('item', item.categoryId)
   router.push({path: '/product-list', query: {categoryId: item.categoryId}})
 }
 </script>

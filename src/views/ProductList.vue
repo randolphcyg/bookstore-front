@@ -27,7 +27,6 @@
             @load="onLoad"
             @offset="10"
         >
-          <!-- <p v-for="item in list" :key="item">{{ item }}</p> -->
           <template v-if="state.productList.length">
             <div class="product-item" v-for="(item, index) in state.productList" :key="index"
                  @click="productDetail(item)">

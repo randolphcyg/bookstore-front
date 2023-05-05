@@ -1,18 +1,18 @@
 <template>
   <div>
-    <header class="home-header wrap" :class="{'active' : state.headerScroll}">
+    <header class="home-header wrap" :class="{ 'active': state.headerScroll }">
       <router-link tag="i" to="./category"><i class="nbicon nbmenu2"></i></router-link>
       <div class="header-search">
         <span class="app-name">先锋书店</span>
         <i class="iconfont icon-search"></i>
-        <router-link tag="span" class="search-title" to="./product-list?from=home"></router-link>
+        <router-link tag="span" class="search-title" to="./product-list?from=home">书名、描述...</router-link>
       </div>
       <router-link class="login" tag="span" to="./login" v-if="!state.isLogin">登录</router-link>
       <router-link class="login" tag="span" to="./user" v-else>
-        <van-icon name="manager-o"/>
+        <van-icon name="manager-o" />
       </router-link>
     </header>
-    <nav-bar/>
+    <nav-bar />
     <swiper :list="state.swiperList"></swiper>
     <div class="category-list">
       <div v-for="item in state.categoryList" v-bind:key="item.categoryId" @click="tips">
@@ -48,7 +48,7 @@
         </div>
       </van-skeleton>
     </div>
-    <div class="book" :style="{ paddingBottom: '100px'}">
+    <div class="book" :style="{ paddingBottom: '100px' }">
       <header class="book-header">最新推荐</header>
       <van-skeleton title :row="3" :loading="state.loading">
         <div class="book-box">
@@ -66,14 +66,14 @@
 </template>
 
 <script setup>
-import {reactive, onMounted, nextTick} from 'vue'
-import {useRouter} from 'vue-router'
+import { reactive, onMounted, nextTick } from 'vue'
+import { useRouter } from 'vue-router'
 import swiper from '@/components/Swiper.vue'
 import navBar from '@/components/NavBar.vue'
-import {getHome} from '@/service/home'
-import {getLocal} from '@/common/js/utils'
-import {showLoadingToast, closeToast, showToast} from 'vant'
-import {useCartStore} from '@/stores/cart'
+import { getHome } from '@/service/home'
+import { getLocal } from '@/common/js/utils'
+import { showLoadingToast, closeToast, showToast } from 'vant'
+import { useCartStore } from '@/stores/cart'
 
 const cart = useCartStore()
 const router = useRouter()
@@ -120,7 +120,7 @@ onMounted(async () => {
     message: '加载中...',
     forbidClick: true
   });
-  const {data} = await getHome()
+  const { data } = await getHome()
   state.swiperList = data.carousels
   state.newBooks = data.newBooks
   state.hots = data.hotBooks
@@ -137,7 +137,7 @@ nextTick(() => {
 })
 
 const goToDetail = (item) => {
-  router.push({path: `/product/${item.booksId}`})
+  router.push({ path: `/product/${item.booksId}` })
 }
 
 const tips = () => {
