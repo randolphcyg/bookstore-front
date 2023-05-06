@@ -15,7 +15,7 @@
 import {reactive, onMounted} from 'vue'
 import md5 from 'js-md5'
 import sHeader from '@/components/SimpleHeader.vue'
-import {getUserInfo, EditUserInfo, logout} from '@/service/user'
+import {getUserInfo, EditUserInfo, logout, login} from '@/service/user'
 import {setLocal} from '@/common/js/utils'
 import {showSuccessToast} from 'vant'
 
@@ -39,8 +39,9 @@ const save = async () => {
   if (state.password) {
     params.passwordMd5 = md5(state.password)
   }
-  await EditUserInfo(params)
-  showSuccessToast('保存成功')
+  console.log(params)
+  const {resultCode} = await EditUserInfo(params)
+  if (resultCode === 200) showSuccessToast('保存成功')
 }
 
 const handleLogout = async () => {
